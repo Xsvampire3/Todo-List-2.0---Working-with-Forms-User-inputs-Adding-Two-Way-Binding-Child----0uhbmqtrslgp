@@ -1,39 +1,33 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 
 const Inbox = (props) => {
   const [newTask, setNewTask] = useState(false);
   const titleRef = useRef();
   const dateRef = useRef();
 
-  const handleAddNewClick = () => {
+  const addNewTask = () => {
     setNewTask(true);
   };
 
-  const handleAddTask = (event) => {
+  const cancelNewTask = () => {
+    setNewTask(false);
+  };
+
+  const handleAddNewTask = (event) => {
     event.preventDefault();
     const newTitle = titleRef.current.value;
     const newDate = dateRef.current.value;
-    const newTask = {
-      title: newTitle,
-      date: newDate
-    };
-    props.onAddTask(newTask);
+    if (newTitle !== "") {
+      props.append({ title: newTitle, date: newDate });
+    }
     setNewTask(false);
-    titleRef.current.value = '';
-    dateRef.current.value = '';
-  };
-
-  const handleCancelClick = () => {
-    setNewTask(false);
-    titleRef.current.value = '';
-    dateRef.current.value = '';
   };
 
   return (
     <div>
       <h3>Inbox</h3>
       {!newTask && (
-        <button className="new" onClick={handleAddNewClick} id='add-new'>
+        <button className="new" onClick={addNewTask} id="add-new">
           +Add New
         </button>
       )}
@@ -41,10 +35,10 @@ const Inbox = (props) => {
         <form className="newtask-box">
           <input type="text" id="title" ref={titleRef}></input>
           <div className="buttons">
-            <button className="new" id="add-list" onClick={handleAddTask}>
+            <button className="new" id="add-list" onClick={handleAddNewTask}>
               Add Task
             </button>
-            <button className="new" onClick={handleCancelClick}>
+            <button className="new" onClick={cancelNewTask}>
               Cancel
             </button>
             <input
@@ -57,11 +51,11 @@ const Inbox = (props) => {
         </form>
       )}
       <div id="inbox">
-        {props.list.map((task) => {
+        {props.list.map((list) => {
           return (
-            <div className="box" key={task.title}>
+            <div className="box" key={list.title}>
               <div className="task">
-                {task.title} ({task.date})
+                {list.title} ({list.date})
               </div>
             </div>
           );
