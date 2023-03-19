@@ -4,11 +4,9 @@ import "../styles/App.css";
 
 const SideNav = (props) => {
 
-
-
   return (
     <ul className="side-nav">
-      <li onClick= {() => {props.change('INBOX')}}>
+      <li onClick={() => {props.change('INBOX')}}>
         <FaInbox />
         <div id="inbox-side">Inbox</div>
       </li>
@@ -17,7 +15,7 @@ const SideNav = (props) => {
         <div id="today">Today</div>
       </li>
       <li onClick={() => {props.change('NEXT')}}>
-        <FaRegCalendar/>
+        <FaRegCalendar />
         <div id="next">Next 7 Days</div>
       </li>
     </ul>
